@@ -12,7 +12,11 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Ruta para obtener todos los géneros
+// =========================
+// GÉNEROS
+// =========================
+
+// Obtener todos los géneros
 app.get('/api/generos', async (req, res) => {
     try {
         const resultado = await sql.query`
@@ -21,13 +25,16 @@ app.get('/api/generos', async (req, res) => {
 
         res.json(resultado.recordset);
     } catch (error) {
+        console.error('ERROR AL OBTENER GENEROS:', error);
+
         res.status(500).json({
-            error: 'Error al obtener los géneros'
+            error: 'Error al obtener los géneros',
+            detalle: error.message
         });
     }
 });
 
-// Ruta para agregar un género
+// Agregar un género
 app.post('/api/generos', async (req, res) => {
     try {
         const { nombre, estado, descripcion } = req.body;
@@ -51,7 +58,7 @@ app.post('/api/generos', async (req, res) => {
     }
 });
 
-// Ruta para actualizar un género
+// Actualizar un género
 app.put('/api/generos/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -77,7 +84,7 @@ app.put('/api/generos/:id', async (req, res) => {
     }
 });
 
-// Ruta para eliminar un género
+// Eliminar un género
 app.delete('/api/generos/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -98,7 +105,11 @@ app.delete('/api/generos/:id', async (req, res) => {
     }
 });
 
-// Ruta para obtener todos los directores
+// =========================
+// DIRECTORES
+// =========================
+
+// Obtener todos los directores
 app.get('/api/directores', async (req, res) => {
     try {
         const resultado = await sql.query`
@@ -113,7 +124,7 @@ app.get('/api/directores', async (req, res) => {
     }
 });
 
-// Ruta para agregar un director
+// Agregar un director
 app.post('/api/directores', async (req, res) => {
     try {
         const { nombres, estado } = req.body;
@@ -137,7 +148,7 @@ app.post('/api/directores', async (req, res) => {
     }
 });
 
-// Ruta para actualizar un director
+// Actualizar un director
 app.put('/api/directores/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -162,7 +173,7 @@ app.put('/api/directores/:id', async (req, res) => {
     }
 });
 
-// Ruta para eliminar un director
+// Eliminar un director
 app.delete('/api/directores/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -183,7 +194,11 @@ app.delete('/api/directores/:id', async (req, res) => {
     }
 });
 
-// Ruta para obtener todas las productoras
+// =========================
+// PRODUCTORAS
+// =========================
+
+// Obtener todas las productoras
 app.get('/api/productoras', async (req, res) => {
     try {
         const resultado = await sql.query`
@@ -198,7 +213,7 @@ app.get('/api/productoras', async (req, res) => {
     }
 });
 
-// Ruta para agregar una productora
+// Agregar una productora
 app.post('/api/productoras', async (req, res) => {
     try {
         const { nombre, estado, slogan, descripcion } = req.body;
@@ -222,7 +237,7 @@ app.post('/api/productoras', async (req, res) => {
     }
 });
 
-// Ruta para actualizar una productora
+// Actualizar una productora
 app.put('/api/productoras/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -249,7 +264,7 @@ app.put('/api/productoras/:id', async (req, res) => {
     }
 });
 
-// Ruta para eliminar una productora
+// Eliminar una productora
 app.delete('/api/productoras/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -262,6 +277,7 @@ app.delete('/api/productoras/:id', async (req, res) => {
         res.json({
             mensaje: 'Productora eliminada correctamente'
         });
+
     } catch (error) {
         res.status(500).json({
             error: 'Error al eliminar la productora'
@@ -269,7 +285,11 @@ app.delete('/api/productoras/:id', async (req, res) => {
     }
 });
 
-// Ruta para obtener todos los tipos
+// =========================
+// TIPOS
+// =========================
+
+// Obtener todos los tipos
 app.get('/api/tipos', async (req, res) => {
     try {
         const resultado = await sql.query`
@@ -284,7 +304,7 @@ app.get('/api/tipos', async (req, res) => {
     }
 });
 
-// Ruta para agregar un tipo
+// Agregar un tipo
 app.post('/api/tipos', async (req, res) => {
     try {
         const { nombre, descripcion } = req.body;
@@ -308,7 +328,7 @@ app.post('/api/tipos', async (req, res) => {
     }
 });
 
-// Ruta para actualizar un tipo
+// Actualizar un tipo
 app.put('/api/tipos/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -333,7 +353,7 @@ app.put('/api/tipos/:id', async (req, res) => {
     }
 });
 
-// Ruta para eliminar un tipo
+// Eliminar un tipo
 app.delete('/api/tipos/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -346,6 +366,7 @@ app.delete('/api/tipos/:id', async (req, res) => {
         res.json({
             mensaje: 'Tipo eliminado correctamente'
         });
+
     } catch (error) {
         res.status(500).json({
             error: 'Error al eliminar el tipo'
@@ -353,7 +374,11 @@ app.delete('/api/tipos/:id', async (req, res) => {
     }
 });
 
-// Ruta para obtener todos los registros de media
+// =========================
+// MEDIA / PELÍCULAS
+// =========================
+
+// Obtener todos los registros de media
 app.get('/api/media', async (req, res) => {
     try {
         const resultado = await sql.query`
@@ -368,7 +393,7 @@ app.get('/api/media', async (req, res) => {
     }
 });
 
-// Ruta para agregar una media
+// Agregar una media
 app.post('/api/media', async (req, res) => {
     try {
         const {
@@ -408,7 +433,7 @@ app.post('/api/media', async (req, res) => {
     }
 });
 
-// Ruta para actualizar una media
+// Actualizar una media
 app.put('/api/media/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -453,7 +478,7 @@ app.put('/api/media/:id', async (req, res) => {
     }
 });
 
-// Ruta para eliminar una media
+// Eliminar una media
 app.delete('/api/media/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -466,6 +491,7 @@ app.delete('/api/media/:id', async (req, res) => {
         res.json({
             mensaje: 'Media eliminada correctamente'
         });
+
     } catch (error) {
         res.status(500).json({
             error: 'Error al eliminar la media'
@@ -473,10 +499,12 @@ app.delete('/api/media/:id', async (req, res) => {
     }
 });
 
-// Conectar a la base de datos
+// =========================
+// CONEXIÓN Y SERVIDOR
+// =========================
+
 conectarBD();
 
-// Iniciar servidor
 app.listen(PORT, () => {
     console.log(`Servidor ejecutándose en el puerto ${PORT}`);
 });
