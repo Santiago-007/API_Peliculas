@@ -1,21 +1,23 @@
-const sql = require('mssql/msnodesqlv8');
+const sql = require('mssql');
 
 const config = {
-    server: '(local)\\SQLEXPRESS',
-    database: 'API_Peliculas',
-    driver: 'ODBC Driver 18 for SQL Server',
+    server: process.env.DB_SERVER,
+    port: Number(process.env.DB_PORT || 1433),
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     options: {
-        trustedConnection: true,
-        trustServerCertificate: true
+        encrypt: true,
+        trustServerCertificate: false
     }
 };
 
 const conectarBD = async () => {
     try {
         await sql.connect(config);
-        console.log('Conectado a SQL Server correctamente');
+        console.log('Conectado a Azure SQL correctamente');
     } catch (error) {
-        console.error('Error al conectar con SQL Server:', error);
+        console.error('Error al conectar con Azure SQL:', error);
     }
 };
 

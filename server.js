@@ -1,17 +1,18 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 
 const { sql, conectarBD } = require('./database');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
 
 // Ruta para obtener todos los géneros
-
 app.get('/api/generos', async (req, res) => {
     try {
         const resultado = await sql.query`
@@ -112,6 +113,7 @@ app.get('/api/directores', async (req, res) => {
     }
 });
 
+// Ruta para agregar un director
 app.post('/api/directores', async (req, res) => {
     try {
         const { nombres, estado } = req.body;
@@ -260,7 +262,6 @@ app.delete('/api/productoras/:id', async (req, res) => {
         res.json({
             mensaje: 'Productora eliminada correctamente'
         });
-
     } catch (error) {
         res.status(500).json({
             error: 'Error al eliminar la productora'
@@ -345,7 +346,6 @@ app.delete('/api/tipos/:id', async (req, res) => {
         res.json({
             mensaje: 'Tipo eliminado correctamente'
         });
-
     } catch (error) {
         res.status(500).json({
             error: 'Error al eliminar el tipo'
@@ -353,6 +353,7 @@ app.delete('/api/tipos/:id', async (req, res) => {
     }
 });
 
+// Ruta para obtener todos los registros de media
 app.get('/api/media', async (req, res) => {
     try {
         const resultado = await sql.query`
@@ -411,6 +412,7 @@ app.post('/api/media', async (req, res) => {
 app.put('/api/media/:id', async (req, res) => {
     try {
         const { id } = req.params;
+
         const {
             serial,
             titulo,
@@ -464,7 +466,6 @@ app.delete('/api/media/:id', async (req, res) => {
         res.json({
             mensaje: 'Media eliminada correctamente'
         });
-
     } catch (error) {
         res.status(500).json({
             error: 'Error al eliminar la media'
@@ -477,5 +478,5 @@ conectarBD();
 
 // Iniciar servidor
 app.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
+    console.log(`Servidor ejecutándose en el puerto ${PORT}`);
 });
