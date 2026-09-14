@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+
 // =========================
 // GÉNEROS
 // =========================
@@ -105,6 +106,7 @@ app.delete('/api/generos/:id', async (req, res) => {
     }
 });
 
+
 // =========================
 // DIRECTORES
 // =========================
@@ -193,6 +195,7 @@ app.delete('/api/directores/:id', async (req, res) => {
         });
     }
 });
+
 
 // =========================
 // PRODUCTORAS
@@ -285,6 +288,7 @@ app.delete('/api/productoras/:id', async (req, res) => {
     }
 });
 
+
 // =========================
 // TIPOS
 // =========================
@@ -373,6 +377,7 @@ app.delete('/api/tipos/:id', async (req, res) => {
         });
     }
 });
+
 
 // =========================
 // MEDIA / PELÍCULAS
@@ -491,7 +496,6 @@ app.delete('/api/media/:id', async (req, res) => {
         res.json({
             mensaje: 'Media eliminada correctamente'
         });
-
     } catch (error) {
         res.status(500).json({
             error: 'Error al eliminar la media'
@@ -499,12 +503,21 @@ app.delete('/api/media/:id', async (req, res) => {
     }
 });
 
+
 // =========================
 // CONEXIÓN Y SERVIDOR
 // =========================
 
-conectarBD();
+const iniciarServidor = async () => {
+    try {
+        await conectarBD();
 
-app.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en el puerto ${PORT}`);
-});
+        app.listen(PORT, () => {
+            console.log(`Servidor ejecutándose en el puerto ${PORT}`);
+        });
+    } catch (error) {
+        console.error('No se pudo iniciar el servidor por un error de conexión con Azure SQL.');
+    }
+};
+
+iniciarServidor();

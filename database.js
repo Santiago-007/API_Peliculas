@@ -18,6 +18,7 @@ const conectarBD = async () => {
         console.log('Conectado a Azure SQL correctamente');
     } catch (error) {
         console.error('Error al conectar con Azure SQL:', error);
+        throw error;
     }
 };
 
